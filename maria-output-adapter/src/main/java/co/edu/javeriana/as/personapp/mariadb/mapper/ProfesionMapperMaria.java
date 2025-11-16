@@ -1,5 +1,7 @@
 package co.edu.javeriana.as.personapp.mariadb.mapper;
 
+import java.sql.Date;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,6 +12,7 @@ import co.edu.javeriana.as.personapp.common.annotations.Mapper;
 import co.edu.javeriana.as.personapp.domain.Profession;
 import co.edu.javeriana.as.personapp.domain.Study;
 import co.edu.javeriana.as.personapp.mariadb.entity.EstudiosEntity;
+import co.edu.javeriana.as.personapp.mariadb.entity.EstudiosEntityPK;
 import co.edu.javeriana.as.personapp.mariadb.entity.ProfesionEntity;
 
 @Mapper
@@ -32,10 +35,36 @@ public class ProfesionMapperMaria {
 	}
 
 	private List<EstudiosEntity> validateEstudios(List<Study> studies) {
-		return studies != null && !studies.isEmpty() ? studies.stream()
-				.map(study -> estudiosMapperMaria.fromDomainToAdapter(study)).collect(Collectors.toList())
-				: new ArrayList<EstudiosEntity>();
+		if (studies == null || studies.isEmpty()) {
+			return new ArrayList<>();
+		}
+
+		return studies.stream().map(study -> {
+			EstudiosEntity e = new EstudiosEntity();
+
+			// --- Composite PK ---
+			EstudiosEntityPK pk = new EstudiosEntityPK();
+			pk.setCcPer(study.getPerson().getIdentification());
+			pk.setIdProf(study.getProfession().getIdentification());
+			e.setEstudiosPK(pk);
+
+			// --- Simple fields ---
+			e.setFecha(study.getGraduationDate() != null
+				? Date.from(study.getGraduationDate()
+					.atStartOfDay()
+					.atZone(ZoneId.systemDefault())
+					.toInstant())
+				: null
+			);
+
+			e.setUniver(study.getUniversityName() != null
+				? study.getUniversityName()
+				: ""
+			);
+			return e;
+		}).collect(Collectors.toList());
 	}
+
 
 	public Profession fromAdapterToDomain(ProfesionEntity profesionEntity) {
 		Profession profession = new Profession();

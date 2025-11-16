@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import co.edu.javeriana.as.personapp.common.exceptions.InvalidOptionException;
+import co.edu.javeriana.as.personapp.domain.Profession;
 import co.edu.javeriana.as.personapp.terminal.adapter.ProfesionInputAdapterCli;
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,13 +67,22 @@ public class ProfesionMenu {
 				case OPCION_VER_TODO:
                     profesionInputAdapterCli.historial();	
 					break;
-				case OPCION_CREAR:				
+				case OPCION_CREAR:	
+					Profession profession_nueva = leerDatosProfesion(keyboard);
+					profesionInputAdapterCli.crear(profession_nueva);			
 					break;
 				case OPCION_EDITAR:
-					keyboard.nextLine();					
+					keyboard.nextLine();
+					System.out.print("Ingrese la id de la persona: ");
+					Integer id_editar = Integer.parseInt(keyboard.nextLine());
+					Profession profesion_editar = leerDatosProfesionEditar(keyboard);
+					profesionInputAdapterCli.editar(id_editar, profesion_editar);				
 					break;
 				case OPCION_ELIMINAR:
-					keyboard.nextLine();	
+					keyboard.nextLine();
+					System.out.print("Ingrese la id de la persona: ");
+					Integer id_eliminar = Integer.parseInt(keyboard.nextLine());
+					profesionInputAdapterCli.eliminar(id_eliminar);	
 					break;
 				default:
 					log.warn("La opción elegida no es válida.");
@@ -108,5 +118,39 @@ public class ProfesionMenu {
 			log.warn("Solo se permiten números.");
 			return leerOpcion(keyboard);
 		}
+	}
+
+	private Profession leerDatosProfesion(Scanner keyboard){
+		keyboard.nextLine();
+
+		System.out.print("Ingrese id: ");
+		int ident = Integer.parseInt(keyboard.nextLine());
+
+		System.out.print("Ingrese nombre: ");
+		String nombre = keyboard.nextLine();
+
+		System.out.print("Ingrese descripcion: ");
+		String apellido = keyboard.nextLine();
+
+		Profession p = new Profession();
+		p.setName(nombre);
+		p.setDescription(apellido);
+		p.setIdentification(ident);
+
+		return p;
+	}
+
+	private Profession leerDatosProfesionEditar(Scanner keyboard){
+		System.out.print("Ingrese nombre: ");
+		String nombre = keyboard.nextLine();
+
+		System.out.print("Ingrese descripcion: ");
+		String apellido = keyboard.nextLine();
+
+		Profession p = new Profession();
+		p.setName(nombre);
+		p.setDescription(apellido);
+
+		return p;
 	}
 }

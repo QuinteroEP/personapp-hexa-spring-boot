@@ -30,11 +30,12 @@ public class ProfessionUseCase implements ProfessionInputPort {
     public Profession edit(Integer id, Profession profession) throws NoExistException {
         Profession old = persistence.findById(id);
 
-        if (old == null) {
-            throw new NoExistException("No existe la profesión con ID: " + id);
-        }
-
-        return persistence.save(profession);
+        if (old != null){
+			profession.setIdentification(id);
+			return persistence.save(profession);
+		}
+		throw new NoExistException(
+				"The person with id " + id + " does not exist into db, cannot be edited");
     }
 
     @Override

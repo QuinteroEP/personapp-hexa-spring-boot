@@ -13,6 +13,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 /**
  *
  * @author aasanchez
@@ -22,6 +28,12 @@ import javax.persistence.Table;
 @NamedQueries({ @NamedQuery(name = "ProfesionEntity.findAll", query = "SELECT p FROM ProfesionEntity p"),
 		@NamedQuery(name = "ProfesionEntity.findById", query = "SELECT p FROM ProfesionEntity p WHERE p.id = :id"),
 		@NamedQuery(name = "ProfesionEntity.findByNom", query = "SELECT p FROM ProfesionEntity p WHERE p.nom = :nom") })
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(exclude = "estudios")
 public class ProfesionEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -37,74 +49,4 @@ public class ProfesionEntity implements Serializable {
 	private String des;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "profesion")
 	private List<EstudiosEntity> estudios;
-
-	public ProfesionEntity() {
-	}
-
-	public ProfesionEntity(Integer id) {
-		this.id = id;
-	}
-
-	public ProfesionEntity(Integer id, String nom) {
-		this.id = id;
-		this.nom = nom;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getDes() {
-		return des;
-	}
-
-	public void setDes(String des) {
-		this.des = des;
-	}
-
-	public List<EstudiosEntity> getEstudios() {
-		return estudios;
-	}
-
-	public void setEstudios(List<EstudiosEntity> estudiosList) {
-		this.estudios = estudiosList;
-	}
-
-	@Override
-	public int hashCode() {
-		int hash = 0;
-		hash += (id != null ? id.hashCode() : 0);
-		return hash;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the id fields are not set
-		if (!(object instanceof ProfesionEntity)) {
-			return false;
-		}
-		ProfesionEntity other = (ProfesionEntity) object;
-		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "ProfesionEntity [id=" + id + ", nom=" + nom + ", des=" + des + "]";
-	}
-
 }
