@@ -38,7 +38,7 @@ public class ProfessionUseCase implements ProfessionInputPort {
     }
 
     @Override
-    public boolean delete(Integer id) throws NoExistException {
+    public boolean drop(Integer id) throws NoExistException {
         Profession old = persistence.findById(id);
 
         if (old == null) {
@@ -62,5 +62,10 @@ public class ProfessionUseCase implements ProfessionInputPort {
     @Override
     public List<Profession> findAll() {
         return persistence.find();
+    }
+
+    @Override
+    public Integer count() {
+        return findAll().size();
     }
 }

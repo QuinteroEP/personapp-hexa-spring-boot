@@ -48,7 +48,7 @@ public class ProfessionControllerV1 {
     @DeleteMapping("/{id}")
     public boolean delete(@PathVariable Integer id) {
         try {
-            return service.delete(id);
+            return service.drop(id);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }

@@ -11,10 +11,12 @@ import co.edu.javeriana.as.personapp.application.port.out.PersonOutputPort;
 import co.edu.javeriana.as.personapp.application.usecase.PersonUseCase;
 import co.edu.javeriana.as.personapp.common.annotations.Adapter;
 import co.edu.javeriana.as.personapp.common.exceptions.InvalidOptionException;
+import co.edu.javeriana.as.personapp.common.exceptions.NoExistException;
 import co.edu.javeriana.as.personapp.common.setup.DatabaseOption;
 import co.edu.javeriana.as.personapp.terminal.mapper.PersonaMapperCli;
 import co.edu.javeriana.as.personapp.terminal.model.PersonaModelCli;
 import lombok.extern.slf4j.Slf4j;
+import co.edu.javeriana.as.personapp.domain.Person;
 
 @Slf4j
 @Adapter
@@ -54,6 +56,49 @@ public class PersonaInputAdapterCli {
 	    personInputPort.findAll().stream()
 	        .map(personaMapperCli::fromDomainToAdapterCli)
 	        .forEach(System.out::println);
+		System.out.println("Total: " + personInputPort.count());
+	}
+
+	public Person crear(Person data) {
+		log.info("Into crear PersonaEntity in Input Adapter");
+		Person nueva = personInputPort.create(data);
+		return nueva;
+	}
+
+	public void buscar(Integer id) {
+		log.info("Into buscar PersonaEntity in Input Adapter");
+		Person persona;
+		try {
+			persona = personInputPort.findOne(id);
+			System.out.println(persona);
+		} catch (NoExistException e) {
+			log.info("Error: Persona no encontrada");
+			System.out.println("Error: La persona con id " + id + " no existe");
+			e.printStackTrace();
+		}
+	}
+
+	public Person editar(Integer id, Person data) {
+		log.info("Into editar PersonaEntity in Input Adapter");
+		Person editado;
+		try {
+			editado = personInputPort.edit(id, data);
+		} catch (NoExistException e) {
+			System.out.println("Error: la persona no existe");
+			editado = null;
+			e.printStackTrace();
+		}
+		return editado;
+	}
+
+	public void eliminar(Integer id) {
+		log.info("Into elimiar PersonaEntity in Input Adapter");
+		try {
+			personInputPort.drop(id);
+		} catch (NoExistException e) {
+			log.info("Error: Persona no encontrada");
+			e.printStackTrace();
+		}
 	}
 
 }

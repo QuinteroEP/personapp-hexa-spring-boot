@@ -7,6 +7,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -44,7 +45,7 @@ public class PersonaEntity implements Serializable {
 	private Integer edad;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "duenio")
 	private List<TelefonoEntity> telefonos;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "persona", fetch = FetchType.LAZY)
 	private List<EstudiosEntity> estudios;
 
 	public PersonaEntity() {

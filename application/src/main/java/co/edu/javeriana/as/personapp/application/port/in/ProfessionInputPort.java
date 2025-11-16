@@ -10,9 +10,11 @@ public interface ProfessionInputPort {
 
     Profession edit(Integer id, Profession profession) throws NoExistException;
 
-    boolean delete(Integer id) throws NoExistException;
+    boolean drop(Integer id) throws NoExistException;
 
     Profession findOne(Integer id) throws NoExistException;
+    
+    public Integer count();
 
     List<Profession> findAll();
 }
