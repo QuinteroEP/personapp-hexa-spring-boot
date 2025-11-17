@@ -48,3 +48,28 @@ db.profesion.insertOne({
 	"des": "Ingenieria de Sistemas",
 	"_class": "co.edu.javeriana.as.personapp.mongo.document.ProfesionDocument"
 })
+
+db.telefono.insertOne({
+	"_id": "1001234567",
+	"oper": "Claro",
+	"primaryDuenio": {
+		"$ref": "persona",
+		"$id": NumberInt(123456789)
+	},
+	"_class": "co.edu.javeriana.as.personapp.mongo.document.TelefonoDocument"
+})
+
+db.estudios.insertOne({
+	"_id": "1",
+	"primaryPersona": {
+		"$ref": "persona",
+		"$id": NumberInt(123456789)
+	},
+	"primaryProfesion": {
+		"$ref": "profesion",
+		"$id": NumberInt(1)
+	},
+	"fecha": ISODate("2025-11-15T00:00:00Z"),
+	"univer": "Universidad Javeriana",
+	"_class": "co.edu.javeriana.as.personapp.mongo.document.EstudiosDocument"
+})

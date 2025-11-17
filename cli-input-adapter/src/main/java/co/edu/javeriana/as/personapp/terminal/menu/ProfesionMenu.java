@@ -3,12 +3,15 @@ package co.edu.javeriana.as.personapp.terminal.menu;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import org.springframework.stereotype.Component;
+
 import co.edu.javeriana.as.personapp.common.exceptions.InvalidOptionException;
 import co.edu.javeriana.as.personapp.domain.Profession;
 import co.edu.javeriana.as.personapp.terminal.adapter.ProfesionInputAdapterCli;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Component
 public class ProfesionMenu {
     private static final int OPCION_REGRESAR_MODULOS = 0;
 	private static final int PERSISTENCIA_MARIADB = 1;

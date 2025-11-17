@@ -65,16 +65,18 @@ public class PersonaInputAdapterCli {
 		return nueva;
 	}
 
-	public void buscar(Integer id) {
+	public Person buscar(Integer id) {
 		log.info("Into buscar PersonaEntity in Input Adapter");
 		Person persona;
 		try {
 			persona = personInputPort.findOne(id);
 			System.out.println(persona);
+			return persona;
 		} catch (NoExistException e) {
 			log.info("Error: Persona no encontrada");
 			System.out.println("Error: La persona con id " + id + " no existe");
 			e.printStackTrace();
+			return null;
 		}
 	}
 
