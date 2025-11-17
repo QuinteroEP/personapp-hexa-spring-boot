@@ -9,7 +9,6 @@ import co.edu.javeriana.as.personapp.application.usecase.PersonUseCase;
 import co.edu.javeriana.as.personapp.common.annotations.Adapter;
 import co.edu.javeriana.as.personapp.common.exceptions.InvalidOptionException;
 import co.edu.javeriana.as.personapp.common.setup.DatabaseOption;
-import co.edu.javeriana.as.personapp.terminal.mapper.PersonaMapperCli;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

@@ -3,6 +3,8 @@ package co.edu.javeriana.as.personapp.terminal.menu;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import org.springframework.stereotype.Component;
+
 import co.edu.javeriana.as.personapp.common.exceptions.InvalidOptionException;
 import co.edu.javeriana.as.personapp.domain.Gender;
 import co.edu.javeriana.as.personapp.domain.Person;
@@ -10,6 +12,7 @@ import co.edu.javeriana.as.personapp.terminal.adapter.PersonaInputAdapterCli;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Component
 public class PersonaMenu {
 
 	private static final int OPCION_REGRESAR_MODULOS = 0;
