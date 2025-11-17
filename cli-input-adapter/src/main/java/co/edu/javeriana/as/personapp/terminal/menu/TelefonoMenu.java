@@ -78,10 +78,8 @@ public class TelefonoMenu {
 					break;
 				case OPCION_EDITAR:
 					keyboard.nextLine();
-                    System.out.print("Ingrese la id del dueño: ");
-					Integer id_duenio_editar = Integer.parseInt(keyboard.nextLine());
 					Phone telefono_editar = leerDatosTelefonoEditar(keyboard);
-					telefonoInputAdapterCli.editar(id_duenio_editar, telefono_editar);				
+					telefonoInputAdapterCli.editar(telefono_editar);				
 					break;
 				case OPCION_ELIMINAR:
 					keyboard.nextLine();
@@ -140,11 +138,15 @@ public class TelefonoMenu {
 	}
 
 	private Phone leerDatosTelefonoEditar(Scanner keyboard){
+		System.out.print("Ingrese el numero del telefono a editar: ");
+		String number = keyboard.nextLine();
+
 		System.out.print("Ingrese operador: ");
 		String operador = keyboard.nextLine();
 
 		Phone p = new Phone();
 		p.setCompany(operador);
+		p.setNumber(number);
 
 		return p;
 	}

@@ -76,14 +76,14 @@ public class ProfesionMenu {
 					break;
 				case OPCION_EDITAR:
 					keyboard.nextLine();
-					System.out.print("Ingrese la id de la persona: ");
+					System.out.print("Ingrese la id de la profesion: ");
 					Integer id_editar = Integer.parseInt(keyboard.nextLine());
 					Profession profesion_editar = leerDatosProfesionEditar(keyboard);
 					profesionInputAdapterCli.editar(id_editar, profesion_editar);				
 					break;
 				case OPCION_ELIMINAR:
 					keyboard.nextLine();
-					System.out.print("Ingrese la id de la persona: ");
+					System.out.print("Ingrese la id de la profesion: ");
 					Integer id_eliminar = Integer.parseInt(keyboard.nextLine());
 					profesionInputAdapterCli.eliminar(id_eliminar);	
 					break;
@@ -99,9 +99,9 @@ public class ProfesionMenu {
 	private void mostrarMenuOpciones() {
 		System.out.println("----------------------");
 		System.out.println(OPCION_VER_UNA + " para buscar una profesion");
-		System.out.println(OPCION_VER_TODO + " para ver todas las profesions");
+		System.out.println(OPCION_VER_TODO + " para ver todas las profesiones");
 		System.out.println(OPCION_CREAR + " para crear una nueva profesion");
-		System.out.println(OPCION_EDITAR + " para editar una profesions");
+		System.out.println(OPCION_EDITAR + " para editar una profesion");
 		System.out.println(OPCION_ELIMINAR + " para eliminar una profesion");
 		System.out.println(OPCION_REGRESAR_MOTOR_PERSISTENCIA + " para regresar");
 	}

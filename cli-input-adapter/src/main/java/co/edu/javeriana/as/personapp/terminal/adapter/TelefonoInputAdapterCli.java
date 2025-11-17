@@ -82,12 +82,11 @@ public class TelefonoInputAdapterCli {
 		}
 	}
 
-	public Phone editar(Integer id, Phone data) {
+	public Phone editar(Phone data) {
 		log.info("Into editar TelefonoEntity in Input Adapter");
-        Person owner = personaInputAdapterCli.buscar(id);
 		Phone editado;
 		try {
-			editado = telefonoInputPort.edit(owner, data);
+			editado = telefonoInputPort.edit(data);
 		} catch (NoExistException e) {
 			System.out.println("Error: la persona no existe");
 			editado = null;

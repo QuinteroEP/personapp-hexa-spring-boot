@@ -27,16 +27,15 @@ public class TelefonoUseCase implements TelefonoInputPort{
     }
 
     @Override
-    public Phone edit(Person personaId, Phone telefono) throws NoExistException {
+    public Phone edit(Phone telefono) throws NoExistException {
         Phone old = persistence.findByNumber(telefono.getNumber());
 
         if (old != null){
-			telefono.setOwner(personaId);
-            telefono.setNumber(telefono.getNumber());
+            telefono.setOwner(old.getOwner());
 			return persistence.create(telefono);
 		}
 		throw new NoExistException(
-				"The person with id " + personaId + " does not exist into db, number cannot be edited");
+				"The phone with number " + telefono.getNumber() + " does not exist into db, number cannot be edited");
     }
 
     @Override

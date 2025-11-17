@@ -12,6 +12,7 @@ import co.edu.javeriana.as.personapp.common.annotations.Adapter;
 import co.edu.javeriana.as.personapp.domain.Person;
 import co.edu.javeriana.as.personapp.mongo.document.PersonaDocument;
 import co.edu.javeriana.as.personapp.mongo.mapper.PersonaMapperMongo;
+import co.edu.javeriana.as.personapp.mongo.repository.EstudiosRepositoryMongo;
 import co.edu.javeriana.as.personapp.mongo.repository.PersonaRepositoryMongo;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +25,10 @@ public class PersonOutputAdapterMongo implements PersonOutputPort {
 	
 	@Autowired
 	private PersonaMapperMongo personaMapperMongo;
-	
+
+	@Autowired
+	private EstudiosRepositoryMongo estudiosRepositoryMongo;
+
 	@Override
 	public Person save(Person person) {
 		log.debug("Into save on Adapter MongoDB");
@@ -40,6 +44,7 @@ public class PersonOutputAdapterMongo implements PersonOutputPort {
 	@Override
 	public Boolean delete(Integer identification) {
 		log.debug("Into delete on Adapter MongoDB");
+		estudiosRepositoryMongo.deleteByPrimaryPersona_Id(identification);
 		personaRepositoryMongo.deleteById(identification);
 		return personaRepositoryMongo.findById(identification).isEmpty();
 	}
