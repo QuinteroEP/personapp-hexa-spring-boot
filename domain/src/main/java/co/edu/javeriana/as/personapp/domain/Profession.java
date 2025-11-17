@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
 @NoArgsConstructor
@@ -20,5 +21,6 @@ public class Profession {
 	private String name;
 	private String description;
 	@ToString.Exclude
+	@JsonIgnore
 	private List<Study> studies;
 }

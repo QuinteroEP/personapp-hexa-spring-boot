@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
 @NoArgsConstructor
@@ -18,5 +19,6 @@ public class Phone {
 	@NonNull
 	@ToString.Exclude
     @EqualsAndHashCode.Exclude
+	@JsonIgnore
 	private Person owner;
 }

@@ -7,6 +7,7 @@ import java.util.Date;
 import co.edu.javeriana.as.personapp.common.annotations.Mapper;
 import co.edu.javeriana.as.personapp.domain.Person;
 import co.edu.javeriana.as.personapp.domain.Profession;
+import co.edu.javeriana.as.personapp.domain.Gender;
 import co.edu.javeriana.as.personapp.domain.Study;
 import co.edu.javeriana.as.personapp.mariadb.entity.EstudiosEntity;
 import co.edu.javeriana.as.personapp.mariadb.entity.EstudiosEntityPK;
@@ -52,12 +53,40 @@ public class EstudiosMapperMaria {
 	public Study fromAdapterToDomain(EstudiosEntity entity) {
 		Study study = new Study();
 
+		// Map persona if available
+		PersonaEntity personaEntity = entity.getPersona();
 		Person p = new Person();
-		p.setIdentification(entity.getEstudiosPK().getCcPer());
+		if (personaEntity != null) {
+			p.setIdentification(personaEntity.getCc());
+			p.setFirstName(personaEntity.getNombre());
+			p.setLastName(personaEntity.getApellido());
+			Character g = personaEntity.getGenero();
+			if (g != null) {
+				if (g == 'M' || g == 'm') {
+					p.setGender(Gender.MALE);
+				} else if (g == 'F' || g == 'f') {
+					p.setGender(Gender.FEMALE);
+				} else {
+					p.setGender(Gender.OTHER);
+				}
+			}
+			p.setAge(personaEntity.getEdad());
+		} else {
+			// fallback to PK values
+			p.setIdentification(entity.getEstudiosPK().getCcPer());
+		}
 		study.setPerson(p);
 
+		// Map profesion if available
+		ProfesionEntity profesionEntity = entity.getProfesion();
 		Profession prof = new Profession();
-		prof.setIdentification(entity.getEstudiosPK().getIdProf());
+		if (profesionEntity != null) {
+			prof.setIdentification(profesionEntity.getId());
+			prof.setName(profesionEntity.getNom());
+			prof.setDescription(profesionEntity.getDes());
+		} else {
+			prof.setIdentification(entity.getEstudiosPK().getIdProf());
+		}
 		study.setProfession(prof);
 
 		study.setGraduationDate(validateGraduationDate(entity.getFecha()));

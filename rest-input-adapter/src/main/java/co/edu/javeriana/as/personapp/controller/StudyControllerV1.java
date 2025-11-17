@@ -27,7 +27,15 @@ public class StudyControllerV1 {
 
     @GetMapping
     public List<Study> findAll() {
-        return service.findAll();
+        try {
+            log.info("GET /api/v1/studies - fetching all studies");
+            List<Study> all = service.findAll();
+            log.info("Found {} studies", all != null ? all.size() : 0);
+            return all;
+        } catch (Exception e) {
+            log.error("Error fetching studies", e);
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
+        }
     }
 
     @GetMapping("/{personId}/{profId}")

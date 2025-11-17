@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
 @NoArgsConstructor
@@ -24,11 +25,13 @@ public class Person {
 	private Gender gender;
 	private Integer age;
 	@ToString.Exclude
+	@JsonIgnore
 	private List<Phone> phoneNumbers;
 	@ToString.Exclude
+	@JsonIgnore
 	private List<Study> studies;
 
 	public Boolean isValidAge() {
-		return this.age >= 0;
+		return this.age != null && this.age >= 0;
 	}
 }

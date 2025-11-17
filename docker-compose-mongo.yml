@@ -4,7 +4,7 @@ services:
     container_name: personapp-mongo
     restart: unless-stopped
     environment:
-      MONGO_INITDB_DATABASE: persondb 
+      
       MONGO_INITDB_ROOT_USERNAME: persona_db
       MONGO_INITDB_ROOT_PASSWORD: persona_db
     ports:
