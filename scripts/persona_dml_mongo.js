@@ -1,4 +1,4 @@
-use prueba_db
+db = db.getSiblingDB("persona_db")
 
 db.persona.insertMany([
 	{
@@ -41,3 +41,10 @@ db.persona.insertMany([
 		"_class": "co.edu.javeriana.as.personapp.mongo.document.PersonaDocument"
 	}
 ], { ordered: false })
+
+db.profesion.insertOne({
+	"_id": NumberInt(1),
+	"nom": "Sistemas",
+	"des": "Ingenieria de Sistemas",
+	"_class": "co.edu.javeriana.as.personapp.mongo.document.ProfesionDocument"
+})
