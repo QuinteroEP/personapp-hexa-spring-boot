@@ -13,6 +13,8 @@ import co.edu.javeriana.as.personapp.application.usecase.PersonUseCase;
 import co.edu.javeriana.as.personapp.common.annotations.Adapter;
 import co.edu.javeriana.as.personapp.common.exceptions.InvalidOptionException;
 import co.edu.javeriana.as.personapp.common.setup.DatabaseOption;
+import co.edu.javeriana.as.personapp.common.exceptions.NoExistException;
+import co.edu.javeriana.as.personapp.model.request.PhoneRequest;
 import co.edu.javeriana.as.personapp.domain.Gender;
 import co.edu.javeriana.as.personapp.domain.Person;
 import co.edu.javeriana.as.personapp.mapper.PersonaMapperRest;
@@ -55,14 +57,27 @@ public class PersonaInputAdapterRest {
 			if(setPersonOutputPortInjection(database).equalsIgnoreCase(DatabaseOption.MARIA.toString())){
 				return personInputPort.findAll().stream().map(personaMapperRest::fromDomainToAdapterRestMaria)
 						.collect(Collectors.toList());
-			}else {
-				return personInputPort.findAll().stream().map(personaMapperRest::fromDomainToAdapterRestMongo)
+				}else {
+					return personInputPort.findAll().stream().map(personaMapperRest::fromDomainToAdapterRestMongo)
 						.collect(Collectors.toList());
-			}
+				}
 			
 		} catch (InvalidOptionException e) {
 			log.warn(e.getMessage());
 			return new ArrayList<PersonaResponse>();
+		}
+	}
+
+	public List<PhoneRequest> getPhones(String database, Integer identification) {
+		log.info("Into getPhones PersonaInputAdapterRest");
+		try {
+			setPersonOutputPortInjection(database);
+			return personInputPort.getPhones(identification).stream()
+				.map(p -> new PhoneRequest(p.getNumber(), p.getCompany()))
+				.collect(Collectors.toList());
+		} catch (InvalidOptionException | NoExistException e) {
+			log.warn(e.getMessage());
+			return new ArrayList<PhoneRequest>();
 		}
 	}
 
